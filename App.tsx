@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Layout from './src/components/Layout';
 import Dashboard from './src/components/Dashboard';
+import GamifiedDashboardWrapper from './src/components/GamifiedDashboardWrapper';
 import DoctorDashboard from './src/components/DoctorDashboard';
 import NutritionistDashboard from './src/components/NutritionistDashboard';
 import TrainerDashboard from './src/components/TrainerDashboard';
@@ -82,7 +83,7 @@ const AppContent: React.FC = () => {
         switch (currentView) {
           case ViewState.DASHBOARD:
             return (
-              <Dashboard 
+              <GamifiedDashboardWrapper 
                 metrics={MOCK_METRICS} 
                 todayHabits={INITIAL_HABITS}
                 nextAppointment={UPCOMING_APPOINTMENTS[0]}
@@ -106,7 +107,7 @@ const AppContent: React.FC = () => {
           case ViewState.MENTORSHIP:
             return <Mentorship />;
           default:
-            return <Dashboard metrics={MOCK_METRICS} todayHabits={INITIAL_HABITS} nextAppointment={UPCOMING_APPOINTMENTS[0]} userName={user.name.split(' ')[0]} />;
+            return <GamifiedDashboardWrapper metrics={MOCK_METRICS} todayHabits={INITIAL_HABITS} nextAppointment={UPCOMING_APPOINTMENTS[0]} userName={user.name.split(' ')[0]} />;
         }
     };
 
