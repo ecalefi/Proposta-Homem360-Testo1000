@@ -1,32 +1,32 @@
 
 import React, { useState, useEffect } from 'react';
-import Layout from './components/Layout';
-import Dashboard from './components/Dashboard';
-import DoctorDashboard from './components/DoctorDashboard';
-import NutritionistDashboard from './components/NutritionistDashboard';
-import TrainerDashboard from './components/TrainerDashboard';
-import TrainerWorkoutBuilder from './components/TrainerWorkoutBuilder'; 
-import AdminPatientList from './components/AdminPatientList';
-import AdminPatientDetail from './components/AdminPatientDetail';
-import AdminContent from './components/AdminContent';
-import AdminCalendar from './components/AdminCalendar'; // New Import
-import SixPs from './components/SixPs';
-import Agenda from './components/Agenda';
-import Chat from './components/Chat';
-import PatientContent from './components/PatientContent';
-import PatientRecords from './components/PatientRecords';
-import Login from './components/Login';
-import LandingPage from './components/LandingPage'; 
-import NotificationManager from './components/NotificationManager'; 
-import Nutrition from './components/Nutrition';
-import Workout from './components/Workout';
-import Mentorship from './components/Mentorship';
+import Layout from './src/components/Layout';
+import Dashboard from './src/components/Dashboard';
+import DoctorDashboard from './src/components/DoctorDashboard';
+import NutritionistDashboard from './src/components/NutritionistDashboard';
+import TrainerDashboard from './src/components/TrainerDashboard';
+import TrainerWorkoutBuilder from './src/components/TrainerWorkoutBuilder'; 
+import AdminPatientList from './src/components/AdminPatientList';
+import AdminPatientDetail from './src/components/AdminPatientDetail';
+import AdminContent from './src/components/AdminContent';
+import AdminCalendar from './src/components/AdminCalendar';
+import SixPs from './src/components/SixPs';
+import Agenda from './src/components/Agenda';
+import Chat from './src/components/Chat';
+import PatientContent from './src/components/PatientContent';
+import PatientRecords from './src/components/PatientRecords';
+import Login from './src/components/Login';
+import LandingPage from './src/components/LandingPage'; 
+import NotificationManager from './src/components/NotificationManager'; 
+import Nutrition from './src/components/Nutrition';
+import Workout from './src/components/Workout';
+import Mentorship from './src/components/Mentorship';
 
-import { ViewState } from './types';
-import { MOCK_METRICS, INITIAL_HABITS, UPCOMING_APPOINTMENTS } from './constants';
+import { ViewState } from './src/types';
+import { MOCK_METRICS, INITIAL_HABITS, UPCOMING_APPOINTMENTS } from './src/constants';
 import { FileText, MessageSquare, BookOpen, ChefHat, Dumbbell } from 'lucide-react';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
-import { DataProvider } from './contexts/DataContext';
+import { AuthProvider, useAuth } from './src/contexts/AuthContext';
+import { DataProvider } from './src/contexts/DataContext';
 
 const PlaceholderView: React.FC<{title: string, icon: any, description: string}> = ({ title, icon: Icon, description }) => (
     <div className="flex flex-col items-center justify-center h-[60vh] text-center">

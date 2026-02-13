@@ -1,62 +1,28 @@
 import { createClient } from '@supabase/supabase-js';
 
-// NOTA: Em um ambiente de produção real, use variáveis de ambiente seguras.
-// Para evitar o erro "process is not defined" no navegador, usamos strings diretas aqui para o MVP.
-
-// Configuração padrão para evitar crash se as chaves não estiverem presentes
-const SUPABASE_URL = 'https://nemgqwiqreanmjclfgxz.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_rMdX6SHOPznbGFURhFhpMw_TPaQG-mX';
+// Configuração do Supabase
+// Usando variáveis de ambiente ou fallback para local
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'http://127.0.0.1:54321';
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH';
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+// Flag para modo demo (sem backend)
+export const IS_DEMO_MODE = true;
+
 /**
  * SQL SCHEMA REFERENCE
- * Run this in your Supabase SQL Editor to set up the database
+ * Execute este SQL no Supabase SQL Editor:
+ * 
+ * 1. Acesse: https://supabase.com/dashboard/project/wgnedvfzwczybumzbjgo/sql
+ * 2. Cole o conteúdo de database/supabase_schema.sql
+ * 3. Clique em "Run"
+ * 4. Cole o conteúdo de database/supabase_seed.sql
+ * 5. Clique em "Run"
+ * 6. Verifique as tabelas em: Table Editor
  */
 export const SQL_SCHEMA_INSTRUCTIONS = `
--- 1. Create Profiles Table (Public User Data linked to Auth)
-create table public.profiles (
-  id uuid references auth.users not null primary key,
-  email text,
-  name text,
-  role text default 'patient' check (role in ('patient', 'admin')),
-  avatar_url text,
-  created_at timestamp with time zone default timezone('utc'::text, now()) not null
-);
-
--- 2. Enable RLS
-alter table public.profiles enable row level security;
-
--- 3. Create Appointments Table
-create table public.appointments (
-  id uuid default uuid_generate_v4() primary key,
-  patient_id uuid references public.profiles(id),
-  doctor_id uuid references public.profiles(id),
-  date_time timestamp with time zone not null,
-  type text,
-  status text,
-  notes text
-);
-
--- 4. Create Metrics Table
-create table public.health_metrics (
-  id uuid default uuid_generate_v4() primary key,
-  patient_id uuid references public.profiles(id),
-  metric_type text, -- 'testosterone', 'psa', 'weight'
-  value numeric,
-  recorded_at timestamp with time zone default now()
-);
-
--- 5. Create Habit Logs
-create table public.habit_logs (
-  id uuid default uuid_generate_v4() primary key,
-  patient_id uuid references public.profiles(id),
-  log_date date default current_date,
-  water_intake int,
-  workout_completed boolean,
-  sleep_hours numeric,
-  mood text,
-  family_time boolean,
-  hobby_time boolean
-);
+-- Schema completo disponível em:
+-- ~/projetos/Projeto360/database/supabase_schema.sql
+-- ~/projetos/Projeto360/database/supabase_seed.sql
 `;
