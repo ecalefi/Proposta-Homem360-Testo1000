@@ -269,13 +269,15 @@ export const useGamification = () => {
     });
   };
 
-  // Completar missão
-  const completeMission = (missionId: string) => {
+  // Completar missão (com pontos opcionais para cálculo proporcional)
+  const completeMission = (missionId: string, customPoints?: number) => {
     setGamificationData((prev) => {
       const mission = prev.missions.find((m) => m.id === missionId);
       if (!mission || mission.completed) return prev;
 
-      addXP(mission.points);
+      // Usar pontos customizados (proporcional) ou pontos totais da missão
+      const pointsToAdd = customPoints !== undefined ? customPoints : mission.points;
+      addXP(pointsToAdd);
 
       return {
         ...prev,

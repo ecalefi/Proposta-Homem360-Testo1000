@@ -4,6 +4,7 @@ import { Trophy, Target, Zap, TrendingUp, Calendar, ChevronRight, Gamepad2 } fro
 import Dashboard from './Dashboard';
 import GamificationDashboard from './GamificationDashboard';
 import MissionsPanel from './MissionsPanel';
+import SleepChart from './SleepChart';
 import AchievementPopup, { StreakCelebration, useAchievementNotifications } from './AchievementPopup';
 import { useGamification } from '../hooks/useGamification';
 import { DashboardMetrics, HabitLog, Appointment } from '../types';
@@ -39,11 +40,12 @@ const GamifiedDashboardWrapper: React.FC<GamifiedDashboardWrapperProps> = (props
   } = useAchievementNotifications();
 
   // Handlers para gamificação
-  const handleCompleteMission = (missionId: string) => {
+  const handleCompleteMission = (missionId: string, customPoints?: number) => {
     const mission = gamificationData.missions.find((m) => m.id === missionId);
     if (mission && !mission.completed) {
-      completeMission(missionId);
-      notifyMissionComplete(mission.title, mission.points);
+      const points = customPoints !== undefined ? customPoints : mission.points;
+      completeMission(missionId, points);
+      notifyMissionComplete(mission.title, points);
       
       // Verificar conquistas
       checkAchievements();
@@ -187,7 +189,12 @@ const GamifiedDashboardWrapper: React.FC<GamifiedDashboardWrapperProps> = (props
       )}
 
       {activeTab === 'gamification' && (
-        <GamificationDashboard data={gamificationData} />
+        <>
+          <GamificationDashboard data={gamificationData} />
+          <div className="mt-6">
+            <SleepChart />
+          </div>
+        </>
       )}
 
       {activeTab === 'missions' && (
